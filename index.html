@@ -4,568 +4,380 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101116">
-<meta name="description" content="Automatch: explora y busca modelos de coches de distintas marcas y épocas.">
-<title>Automatch | Catálogo de coches</title>
-
+<meta name="theme-color" content="#090d16">
+<title>Automatch | Catálogo mundial de coches</title>
 <style>
-:root {
-  --fondo: #101116;
-  --panel: #191b23;
-  --borde: #30323d;
-  --texto: #f7f7fb;
-  --secundario: #a5a7b5;
-  --rojo: #ff493f;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--fondo);
-  color: var(--texto);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-header {
-  padding: 24px 6%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  border-bottom: 1px solid var(--borde);
-}
-
-.logo {
-  font-size: 27px;
-  font-weight: 900;
-  letter-spacing: -1px;
-}
-
-.logo span { color: var(--rojo); }
-
-header a {
-  color: var(--texto);
-  text-decoration: none;
-}
-
-.etiqueta {
-  color: var(--rojo);
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-.hero {
-  padding: 65px 6% 35px;
-  background:
-    radial-gradient(ellipse at 80% 0%, #49201e 0%, transparent 48%);
-}
-
-h1 {
-  font-size: clamp(36px, 6vw, 68px);
-  margin: 12px 0;
-  letter-spacing: -2px;
-}
-
-.hero p {
-  color: var(--secundario);
-  max-width: 650px;
-  line-height: 1.7;
-}
-
-main {
-  max-width: 1500px;
-  margin: auto;
-  padding: 25px 6% 65px;
-}
-
-.controles {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-input, select, button {
-  width: 100%;
-  padding: 14px;
-  background: var(--panel);
-  color: var(--texto);
-  border: 1px solid var(--borde);
-  border-radius: 9px;
-  font-size: 15px;
-}
-
-input:focus, select:focus {
-  outline: 2px solid var(--rojo);
-  outline-offset: 1px;
-}
-
-button {
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  border-color: var(--rojo);
-}
-
-.resumen {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 24px 0;
-  color: var(--secundario);
-  font-size: 14px;
-}
-
-.resumen strong { color: white; }
-
-.catalogo {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.coche {
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  border-radius: 13px;
-  overflow: hidden;
-  min-width: 0;
-  transition: transform .2s, border-color .2s;
-}
-
-.coche:hover {
-  transform: translateY(-3px);
-  border-color: var(--rojo);
-}
-
-.ilustracion {
-  min-height: 120px;
-  display: grid;
-  place-items: center;
-  font-size: 58px;
-  background: linear-gradient(140deg, #292b35, #17181f);
-}
-
-.detalles { padding: 18px; }
-
-.marca {
-  color: var(--rojo);
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.coche h3 {
-  font-size: 19px;
-  margin: 8px 0;
-  overflow-wrap: anywhere;
-}
-
-.tipo {
-  display: inline-block;
-  background: #292b35;
-  border-radius: 20px;
-  padding: 7px 10px;
-  color: #dedee8;
-  font-size: 12px;
-  margin-top: 8px;
-}
-
-.info {
-  color: var(--secundario);
-  font-size: 12px;
-  line-height: 1.6;
-  margin-top: 12px;
-}
-
-.paginacion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin: 30px 0;
-}
-
-.paginacion button { width: auto; }
-
-.estado {
-  background: var(--panel);
-  border: 1px solid var(--borde);
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  line-height: 1.7;
-}
-
-.error { border-color: var(--rojo); }
-
-footer {
-  border-top: 1px solid var(--borde);
-  padding: 30px 6%;
-  color: var(--secundario);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-footer a { color: white; }
-
-@media (max-width: 850px) {
-  .catalogo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .controles { grid-template-columns: 1fr 1fr; }
-  .controles input { grid-column: 1 / -1; }
-}
-
-@media (max-width: 520px) {
-  header { padding: 20px 5%; }
-  .hero { padding: 45px 5% 25px; }
-  main { padding: 20px 5% 45px; }
-  .catalogo { grid-template-columns: 1fr; }
-  .controles { grid-template-columns: 1fr; }
-  .controles input { grid-column: auto; }
-}
+:root{color-scheme:dark;--bg:#090d16;--panel:#111827;--panel2:#182235;--line:#27344a;--text:#f4f7fc;--muted:#a5b2c7;--blue:#60a5fa;--cyan:#67e8f9}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#15233a 0,transparent 48%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{padding:30px 5% 24px;border-bottom:1px solid var(--line)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:29px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--blue)}
+.tag{color:var(--muted);font-size:13px}
+.hero{padding:32px 0 20px}
+h1{font-size:clamp(29px,5vw,49px);line-height:1.05;margin:0 0 12px;letter-spacing:-1.5px}
+.hero p{color:var(--muted);max-width:680px;line-height:1.6;margin:0}
+main{max-width:1500px;margin:auto;padding:24px 5% 50px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:23px}
+.stat{background:#111827d9;border:1px solid var(--line);border-radius:14px;padding:17px}
+.stat strong{font-size:25px;display:block;margin-bottom:5px}
+.stat span{font-size:12px;color:var(--muted)}
+.filters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(145px,1fr));gap:10px;margin-bottom:13px}
+input,select,button{font:inherit}
+input,select{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:14px;border-radius:10px;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+.actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:15px 0 20px}
+#status{font-size:13px;color:var(--muted);line-height:1.5}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:11px 15px;border-radius:9px}
+button:hover{border-color:var(--blue)}
+button:disabled{opacity:.35;cursor:not-allowed}
+#grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.car{min-width:0;overflow:hidden;background:linear-gradient(145deg,#151f31,#0e1522);border:1px solid var(--line);border-radius:15px;transition:transform .18s,border-color .18s}
+.car:hover{transform:translateY(-3px);border-color:#5576a7}
+.photo{height:175px;background:linear-gradient(135deg,#202d42,#111827);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .placeholder{font-size:56px;opacity:.7}
+.photo .kind{position:absolute;left:10px;top:10px;background:#080d16dc;border:1px solid #ffffff22;border-radius:6px;padding:5px 8px;font-size:11px;color:#dce8fb}
+.info{padding:14px}
+.make{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--blue);font-weight:800;margin-bottom:7px}
+.info h2{font-size:17px;margin:0 0 10px;line-height:1.3;overflow-wrap:anywhere}
+.meta{font-size:12px;color:var(--muted);line-height:1.7;min-height:20px}
+.photo-link{display:inline-block;margin-top:10px;color:var(--cyan);font-size:12px;text-decoration:none}
+.photo-link:hover{text-decoration:underline}
+#empty{display:none;text-align:center;padding:50px 10px;color:var(--muted)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:14px;margin:28px 0}
+#pageInfo{font-size:13px;color:var(--muted)}
+footer{padding:25px 5%;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.8;text-align:center}
+footer a{color:var(--cyan)}
+.loading{color:var(--muted);padding:35px 0}
+@media(max-width:1050px){#grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){#grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.photo{height:145px}.info{padding:11px}.info h2{font-size:15px}}
+@media(max-width:420px){#grid{grid-template-columns:1fr 1fr;gap:9px}.photo{height:115px}.photo .placeholder{font-size:40px}.info h2{font-size:14px}.meta{font-size:11px}.stats{gap:7px}.stat{padding:11px 8px}.stat strong{font-size:20px}.stat span{font-size:10px}}
 </style>
 </head>
-
 <body>
 <header>
-  <a class="logo" href="#">AUTO<span>MATCH</span></a>
-  <span class="etiqueta">MUNDO DEL MOTOR</span>
+  <div class="top">
+    <div class="logo">AUTO<span>MATCH</span></div>
+    <div class="tag">Tu catálogo del mundo del motor</div>
+  </div>
+  <section class="hero">
+    <h1>Todos los coches.<br>Un solo lugar.</h1>
+    <p>Explora marcas y modelos de distintas épocas. Busca deportivos, SUV, coches clásicos, familiares, compactos, berlinas y mucho más.</p>
+  </section>
 </header>
 
-<section class="hero">
-  <div class="etiqueta">TU PRÓXIMO COCHE EMPIEZA AQUÍ</div>
-  <h1>Encuentra tu próximo<br>coche.</h1>
-  <p>
-    Explora miles de modelos de distintas marcas y épocas.
-    Busca tu favorito y descubre nuevas opciones.
-  </p>
-</section>
-
 <main>
-  <h2>Catálogo de vehículos</h2>
-  <p style="color:var(--secundario);line-height:1.7">
-    Busca por marca, modelo o tipo de carrocería.
-  </p>
+  <section class="stats">
+    <div class="stat"><strong id="totalCars">—</strong><span>Modelos catalogados</span></div>
+    <div class="stat"><strong id="totalMakes">—</strong><span>Marcas disponibles</span></div>
+    <div class="stat"><strong id="shownCars">—</strong><span>Resultados encontrados</span></div>
+  </section>
 
-  <div class="controles">
-    <input
-      id="busqueda"
-      type="search"
-      placeholder="Buscar BMW, Ferrari, Ibiza..."
-      aria-label="Buscar coche"
-    >
-
-    <select id="marca" aria-label="Filtrar por marca">
+  <section class="filters">
+    <input id="search" type="search" placeholder="Buscar marca o modelo: Ferrari, Golf, Supra..." aria-label="Buscar coches">
+    <select id="makeFilter" aria-label="Filtrar por marca">
       <option value="">Todas las marcas</option>
     </select>
-
-    <select id="tipo" aria-label="Filtrar por carrocería">
+    <select id="bodyFilter" aria-label="Filtrar por carrocería">
       <option value="">Todas las carrocerías</option>
-      <option value="SUV">SUV y todoterreno</option>
-      <option value="Berlina">Berlina</option>
-      <option value="Compacto">Compacto y utilitario</option>
-      <option value="Familiar">Familiar</option>
-      <option value="Deportivo">Deportivo y cupé</option>
-      <option value="Monovolumen">Monovolumen y furgoneta</option>
-      <option value="Descocido">Otros o sin clasificar</option>
     </select>
+  </section>
+
+  <div class="actions">
+    <div id="status">Conectando con el catálogo de vehículos…</div>
+    <button id="reset">Borrar filtros</button>
   </div>
 
-  <div class="resumen">
-    <span id="contador">Preparando catálogo...</span>
-    <span id="paginaInfo"></span>
-  </div>
+  <div id="grid"><div class="loading">Cargando marcas y modelos…</div></div>
+  <div id="empty">No se han encontrado coches con esos filtros. Prueba otra búsqueda.</div>
 
-  <div id="estado" class="estado" role="status" aria-live="polite">
-    Conectando con la base de datos de vehículos...
-  </div>
-
-  <section id="catalogo" class="catalogo"
-    aria-label="Modelos de coches"></section>
-
-  <div class="paginacion" id="paginacion" hidden>
-    <button id="anterior">← Anterior</button>
-    <span id="numeroPagina"></span>
-    <button id="siguiente">Siguiente →</button>
-  </div>
-
-  <div class="estado">
-    <strong>¿Buscas un coche concreto?</strong>
-    <p style="color:var(--secundario)">
-      Escribe la marca o el modelo en el buscador. Si no aparece,
-      puede que todavía no esté incluido en la fuente de datos.
-    </p>
+  <div class="pagination">
+    <button id="prev" disabled>← Anterior</button>
+    <span id="pageInfo">Página 1</span>
+    <button id="next" disabled>Siguiente →</button>
   </div>
 </main>
 
 <footer>
-  <strong>Automatch</strong> — Tu pasión por los coches.<br>
-  Catálogo de modelos de vehículos:
-  <a href="https://vehiclesdb.com" target="_blank"
-     rel="noopener noreferrer">Vehicle data by VehiclesDB</a>.
-  <br>
-  Los datos disponibles dependen de las fuentes de origen.
-  Este catálogo no ofrece precios de compraventa ni garantiza
-  que todos los modelos estén disponibles en España.
+  Catálogo de datos de vehículos de
+  <a href="https://github.com/vehiclesdb/vehiclesdb" target="_blank" rel="noopener">VehiclesDB</a>,
+  bajo licencia CC BY 4.0. Fotografías de Wikipedia cuando están disponibles; su licencia depende de cada imagen.
+  <br>Automatch es un proyecto independiente y no está afiliado a las marcas mostradas.
 </footer>
 
 <script>
 "use strict";
 
-const URL_MARCAS =
-  "https://cdn.jsdelivr.net/gh/vehiclesdb/vehiclesdb@latest/catalog/car/makes.json";
-
-const URL_MODELOS =
-  "https://cdn.jsdelivr.net/gh/vehiclesdb/vehiclesdb@latest/catalog/car/models.json";
-
-const POR_PAGINA = 36;
-
-let coches = [];
-let pagina = 1;
+const BASE = "https://cdn.jsdelivr.net/gh/vehiclesdb/vehiclesdb@latest/catalog/car";
+const PAGE_SIZE = 36;
 
 const $ = id => document.getElementById(id);
+const grid = $("grid");
+let allCars = [];
+let makes = [];
+let filteredCars = [];
+let page = 1;
+let imageObserver = null;
+const photoCache = new Map();
 
-function textoSeguro(valor) {
-  return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[caracter]);
+function text(value) {
+  return value == null ? "" : String(value);
 }
 
-function nombreCarroceria(coche) {
-  const tipos = Array.isArray(coche.body_types)
-    ? coche.body_types.join(" ")
-    : String(coche.body_types ?? "");
-
-  const t = tipos.toLowerCase();
-
-  if (/suv|off.?road|sport.?utility|4x4/.test(t)) {
-    return "SUV";
-  }
-  if (/coupe|coupé|convertible|cabriolet|roadster|sports car/.test(t)) {
-    return "Deportivo";
-  }
-  if (/wagon|estate|combi|touring|break/.test(t)) {
-    return "Familiar";
-  }
-  if (/minivan|mpv|van|people carrier/.test(t)) {
-    return "Monovolumen";
-  }
-  if (/sedan|saloon|berlina/.test(t)) {
-    return "Berlina";
-  }
-  if (/hatchback|compact|city car/.test(t)) {
-    return "Compacto";
-  }
-
-  return "Descocido";
+function normalize(value) {
+  return text(value).normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().trim();
 }
 
-function emojiCarroceria(tipo) {
-  const iconos = {
-    SUV: "🚙",
-    Berlina: "🚘",
-    Compacto: "🚗",
-    Familiar: "🚐",
-    Deportivo: "🏎️",
-    Monovolumen: "🚐",
-    Descocido: "🚗"
-  };
-
-  return iconos[tipo] || "🚗";
+function makeName(car) {
+  return car._makeName || "Marca desconocida";
 }
 
-function normalizarLista(datos) {
-  if (Array.isArray(datos)) return datos;
-
-  if (datos && Array.isArray(datos.models)) return datos.models;
-  if (datos && Array.isArray(datos.makes)) return datos.makes;
-  if (datos && Array.isArray(datos.items)) return datos.items;
-
+function bodyNames(car) {
+  const values = car.body_types;
+  if (Array.isArray(values)) return values.map(text).filter(Boolean);
+  if (typeof values === "string" && values.trim()) return [values];
   return [];
 }
 
-async function cargarCatalogo() {
-  $("estado").hidden = false;
-  $("estado").textContent =
-    "Descargando el catálogo de vehículos. Puede tardar unos segundos.";
+function bodyLabel(car) {
+  const values = bodyNames(car);
+  return values.length ? values.join(" · ") : "Carrocería no especificada";
+}
 
-  try {
-    const respuestas = await Promise.all([
-      fetch(URL_MARCAS),
-      fetch(URL_MODELOS)
-    ]);
+function placeholder() {
+  return '<div class="placeholder" aria-label="Imagen no disponible">🚘</div>';
+}
 
-    if (!respuestas.every(r => r.ok)) {
-      throw new Error("No se pudieron descargar los datos.");
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("No se ha podido cargar el catálogo.");
+  return response.json();
+}
+
+function getMakeId(value) {
+  return text(value);
+}
+
+function setupFilters() {
+  const makeCounts = new Map();
+  for (const car of allCars) {
+    const name = makeName(car);
+    makeCounts.set(name, (makeCounts.get(name) || 0) + 1);
+  }
+
+  const sortedMakes = [...makeCounts.keys()].sort((a,b) => a.localeCompare(b, "es"));
+  $("makeFilter").innerHTML =
+    '<option value="">Todas las marcas</option>' +
+    sortedMakes.map(name =>
+      `<option value="${escapeHTML(name)}">${escapeHTML(name)} (${makeCounts.get(name)})</option>`
+    ).join("");
+
+  const bodyCounts = new Map();
+  for (const car of allCars) {
+    for (const body of bodyNames(car)) {
+      bodyCounts.set(body, (bodyCounts.get(body) || 0) + 1);
     }
+  }
 
-    const [datosMarcas, datosModelos] = await Promise.all(
-      respuestas.map(r => r.json())
-    );
+  const sortedBodies = [...bodyCounts.keys()].sort((a,b) => a.localeCompare(b, "es"));
+  $("bodyFilter").innerHTML =
+    '<option value="">Todas las carrocerías</option>' +
+    sortedBodies.map(body =>
+      `<option value="${escapeHTML(body)}">${escapeHTML(body)}</option>`
+    ).join("");
+}
 
-    const marcas = normalizarLista(datosMarcas);
-    const modelos = normalizarLista(datosModelos);
+function escapeHTML(value) {
+  return text(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[char]));
+}
 
-    if (!marcas.length || !modelos.length) {
-      throw new Error("La base de datos no tiene el formato esperado.");
+function applyFilters(resetPage = true) {
+  const query = normalize($("search").value);
+  const selectedMake = $("makeFilter").value;
+  const selectedBody = $("bodyFilter").value;
+
+  filteredCars = allCars.filter(car => {
+    const searchable = normalize([
+      makeName(car), car.name, car.slug, ...bodyNames(car)
+    ].join(" "));
+    const matchesQuery = !query || searchable.includes(query);
+    const matchesMake = !selectedMake || makeName(car) === selectedMake;
+    const matchesBody = !selectedBody || bodyNames(car).includes(selectedBody);
+    return matchesQuery && matchesMake && matchesBody;
+  });
+
+  filteredCars.sort((a,b) => {
+    const ap = Number(a.popularity?.global_popularity_decile ?? 99);
+    const bp = Number(b.popularity?.global_popularity_decile ?? 99);
+    return ap - bp || makeName(a).localeCompare(makeName(b)) ||
+      text(a.name).localeCompare(text(b.name));
+  });
+
+  if (resetPage) page = 1;
+  const maxPage = Math.max(1, Math.ceil(filteredCars.length / PAGE_SIZE));
+  page = Math.min(page, maxPage);
+  $("shownCars").textContent = filteredCars.length.toLocaleString("es-ES");
+  $("status").textContent = filteredCars.length
+    ? `Mostrando ${Math.min((page-1)*PAGE_SIZE+1,filteredCars.length)}–${Math.min(page*PAGE_SIZE,filteredCars.length)} de ${filteredCars.length.toLocaleString("es-ES")} resultados`
+    : "No hay resultados para esta búsqueda.";
+  renderPage();
+}
+
+function renderPage() {
+  if (imageObserver) imageObserver.disconnect();
+  const start = (page - 1) * PAGE_SIZE;
+  const cars = filteredCars.slice(start, start + PAGE_SIZE);
+  grid.innerHTML = cars.map((car, index) => {
+    const name = text(car.name) || "Modelo sin nombre";
+    const make = makeName(car);
+    const body = bodyLabel(car);
+    const id = `${start + index}`;
+    return `
+      <article class="car">
+        <div class="photo" id="photo-${id}">
+          ${placeholder()}
+          <span class="kind">COCHE</span>
+        </div>
+        <div class="info">
+          <div class="make">${escapeHTML(make)}</div>
+          <h2>${escapeHTML(name)}</h2>
+          <div class="meta">${escapeHTML(body)}</div>
+          <a class="photo-link" href="${wikiSearchURL(make + " " + name)}" target="_blank" rel="noopener">Ver fotos y detalles ↗</a>
+        </div>
+      </article>`;
+  }).join("");
+
+  $("empty").style.display = cars.length ? "none" : "block";
+  grid.style.display = cars.length ? "grid" : "none";
+  $("prev").disabled = page <= 1;
+  $("next").disabled = page >= Math.ceil(filteredCars.length / PAGE_SIZE);
+  $("pageInfo").textContent = `Página ${page} de ${Math.max(1,Math.ceil(filteredCars.length/PAGE_SIZE))}`;
+
+  imageObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        const element = entry.target;
+        imageObserver.unobserve(element);
+        const idx = Number(element.id.slice("photo-".length));
+        const car = filteredCars[idx];
+        if (car) loadPhoto(element, makeName(car), text(car.name));
+      }
     }
+  }, {rootMargin:"250px"});
 
-    const mapaMarcas = new Map(
-      marcas.map(m => [String(m.id), m.name])
-    );
-
-    coches = modelos
-      .filter(c => c.kind === "car" || !c.kind)
-      .map(c => ({
-        marca: mapaMarcas.get(String(c.make_id)) || "Marca no identificada",
-        modelo: c.name || c.model || "Modelo sin nombre",
-        tipos: c.body_types || [],
-        carroceria: nombreCarroceria(c)
-      }))
-      .filter(c => c.modelo)
-      .sort((a, b) =>
-        a.marca.localeCompare(b.marca, "es") ||
-        a.modelo.localeCompare(b.modelo, "es")
-      );
-
-    const marcasUnicas = [...new Set(coches.map(c => c.marca))]
-      .sort((a, b) => a.localeCompare(b, "es"));
-
-    $("marca").innerHTML =
-      '<option value="">Todas las marcas</option>' +
-      marcasUnicas.map(m =>
-        `<option value="${textoSeguro(m)}">${textoSeguro(m)}</option>`
-      ).join("");
-
-    $("estado").hidden = true;
-    filtrarCoches();
-  } catch (error) {
-    console.error(error);
-
-    $("estado").classList.add("error");
-    $("estado").innerHTML = `
-      <strong>No se ha podido cargar el catálogo.</strong>
-      <p>Comprueba tu conexión a Internet y vuelve a intentarlo.
-      La fuente externa podría estar temporalmente no disponible.</p>
-      <button id="reintentar">Intentar de nuevo</button>
-    `;
-
-    $("reintentar").addEventListener("click", () => {
-      $("estado").classList.remove("error");
-      cargarCatalogo();
-    });
+  for (const element of grid.querySelectorAll(".photo")) {
+    imageObserver.observe(element);
   }
 }
 
-function filtrarCoches() {
-  const consulta = $("busqueda").value.trim().toLocaleLowerCase("es");
-  const marcaElegida = $("marca").value;
-  const tipoElegido = $("tipo").value;
-
-  const filtrados = coches.filter(c => {
-    const coincideTexto =
-      `${c.marca} ${c.modelo}`.toLocaleLowerCase("es").includes(consulta);
-
-    const coincideMarca =
-      !marcaElegida || c.marca === marcaElegida;
-
-    const coincideTipo =
-      !tipoElegido || c.carroceria === tipoElegido;
-
-    return coincideTexto && coincideMarca && coincideTipo;
-  });
-
-  mostrarCoches(filtrados);
+function wikiSearchURL(query) {
+  return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(query);
 }
 
-function mostrarCoches(lista) {
-  const totalPaginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
-
-  if (pagina > totalPaginas) pagina = totalPaginas;
-
-  const inicio = (pagina - 1) * POR_PAGINA;
-  const visibles = lista.slice(inicio, inicio + POR_PAGINA);
-
-  $("contador").innerHTML =
-    `<strong>${lista.length.toLocaleString("es-ES")}</strong> modelos encontrados`;
-
-  $("paginaInfo").textContent =
-    lista.length ? `Mostrando ${inicio + 1}–${inicio + visibles.length}` : "";
-
-  $("numeroPagina").textContent = `${pagina} / ${totalPaginas}`;
-
-  $("paginacion").hidden = lista.length <= POR_PAGINA;
-
-  if (!lista.length) {
-    $("catalogo").innerHTML = "";
-    $("estado").hidden = false;
-    $("estado").textContent =
-      "No hemos encontrado coches con esos filtros. Prueba otra búsqueda.";
+async function loadPhoto(container, make, model) {
+  const key = make + " " + model;
+  if (photoCache.has(key)) {
+    setPhoto(container, photoCache.get(key));
     return;
   }
 
-  $("estado").hidden = true;
-
-  $("catalogo").innerHTML = visibles.map(c => `
-    <article class="coche">
-      <div class="ilustracion" aria-hidden="true">
-        ${emojiCarroceria(c.carroceria)}
-      </div>
-      <div class="detalles">
-        <div class="marca">${textoSeguro(c.marca)}</div>
-        <h3>${textoSeguro(c.modelo)}</h3>
-        <span class="tipo">${textoSeguro(c.carroceria === "Descocido"
-          ? "Carrocería sin clasificar" : c.carroceria)}</span>
-        <div class="info">
-          Modelo incluido en el catálogo general.<br>
-          Consulta las especificaciones de la versión concreta
-          antes de comprar.
-        </div>
-      </div>
-    </article>
-  `).join("");
+  try {
+    const title = encodeURIComponent(key.replace(/\s+/g, "_"));
+    const response = await fetch(
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,
+      {headers: {"Accept":"application/json"}}
+    );
+    if (!response.ok) throw new Error("No hay fotografía");
+    const data = await response.json();
+    const imageURL = data.thumbnail?.source || data.originalimage?.source || "";
+    photoCache.set(key, imageURL);
+    if (imageURL) setPhoto(container, imageURL);
+  } catch (_) {
+    // Si no hay una foto disponible, se conserva el icono del coche.
+  }
 }
 
-$("busqueda").addEventListener("input", () => {
-  pagina = 1;
-  filtrarCoches();
-});
+function setPhoto(container, url) {
+  if (!url || !container.isConnected) return;
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  img.alt = "Fotografía del modelo";
+  img.referrerPolicy = "no-referrer";
+  img.src = url;
+  img.onerror = () => {
+    img.remove();
+    if (!container.querySelector(".placeholder")) {
+      container.insertAdjacentHTML("afterbegin", placeholder());
+    }
+  };
+  const oldPlaceholder = container.querySelector(".placeholder");
+  if (oldPlaceholder) oldPlaceholder.remove();
+  container.prepend(img);
+}
 
-$("marca").addEventListener("change", () => {
-  pagina = 1;
-  filtrarCoches();
-});
+async function start() {
+  try {
+    const [makesData, modelsData] = await Promise.all([
+      fetchJSON(`${BASE}/makes.json`),
+      fetchJSON(`${BASE}/models.json`)
+    ]);
 
-$("tipo").addEventListener("change", () => {
-  pagina = 1;
-  filtrarCoches();
-});
+    makes = Array.isArray(makesData) ? makesData : (makesData.makes || []);
+    const models = Array.isArray(modelsData) ? modelsData : (modelsData.models || []);
 
-$("anterior").addEventListener("click", () => {
-  if (pagina > 1) {
-    pagina--;
-    filtrarCoches();
-    window.scrollTo({ top: 350, behavior: "smooth" });
+    const makeMap = new Map(makes.map(make => [getMakeId(make.id), make.name]));
+    allCars = models
+      .filter(model => model && model.name)
+      .map(model => ({
+        ...model,
+        _makeName: makeMap.get(getMakeId(model.make_id)) || "Marca desconocida"
+      }));
+
+    if (!allCars.length) throw new Error("El catálogo no ha devuelto modelos.");
+
+    $("totalCars").textContent = allCars.length.toLocaleString("es-ES");
+    $("totalMakes").textContent = new Set(allCars.map(makeName)).size.toLocaleString("es-ES");
+    setupFilters();
+    applyFilters();
+  } catch (error) {
+    grid.style.display = "block";
+    grid.innerHTML = `
+      <div class="loading">
+        <strong>No se ha podido cargar el catálogo.</strong><br><br>
+        Comprueba tu conexión a internet y vuelve a cargar la página.
+        <br><br>
+        <button onclick="location.reload()">Reintentar</button>
+      </div>`;
+    $("status").textContent = "Error al conectar con la base de datos.";
+  }
+}
+
+$("search").addEventListener("input", () => applyFilters());
+$("makeFilter").addEventListener("change", () => applyFilters());
+$("bodyFilter").addEventListener("change", () => applyFilters());
+$("reset").addEventListener("click", () => {
+  $("search").value = "";
+  $("makeFilter").value = "";
+  $("bodyFilter").value = "";
+  applyFilters();
+});
+$("prev").addEventListener("click", () => {
+  if (page > 1) { page--; applyFilters(false); window.scrollTo({top:0,behavior:"smooth"}); }
+});
+$("next").addEventListener("click", () => {
+  if (page < Math.ceil(filteredCars.length / PAGE_SIZE)) {
+    page++;
+    applyFilters(false);
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 });
 
-$("siguiente").addEventListener("click", () => {
-  pagina++;
-  filtrarCoches();
-  window.scrollTo({ top: 350, behavior: "smooth" });
-});
-
-cargarCatalogo();
+start();
 </script>
 </body>
 </html>
