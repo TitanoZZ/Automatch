@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AutoMatch te ayuda a encontrar coches que encajan contigo, tus preferencias y tu presupuesto.">
+<title>AutoMatch — Encuentra tu coche ideal</title>
+<style>
+:root {
+  --fondo: #0b0e13;
+  --panel: #151a23;
+  --panel2: #1d2430;
+  --texto: #f5f7fb;
+  --suave: #a8b1c0;
+  --rojo: #ff503f;
+  --borde: #303949;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px max(5%, calc((100% - 1120px)/2));
+  border-bottom: 1px solid var(--borde);
+}
+.logo { font-size: 25px; font-weight: 900; letter-spacing: -1px; }
+.logo span { color: var(--rojo); }
+header a { color: var(--texto); text-decoration: none; font-size: 14px; }
+main { max-width: 1120px; margin: auto; padding: 35px 20px 60px; }
+.hero { padding: 35px 0 30px; }
+.sobrelinea {
+  color: var(--rojo);
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+h1 { font-size: clamp(38px, 7vw, 68px); line-height: 1.05; margin: 16px 0; letter-spacing: -2px; }
+h1 span { color: var(--rojo); }
+h2 { margin-top: 0; }
+p { color: var(--suave); line-height: 1.65; }
+.hero p { max-width: 650px; font-size: 17px; }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 25px;
+  margin: 22px 0;
+}
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px;
+}
+.campo label { display: block; margin-bottom: 9px; font-size: 14px; font-weight: bold; }
+select, input {
+  display: block;
+  width: 100%;
+  min-height: 47px;
+  padding: 12px;
+  background: #0b0e13;
+  color: var(--texto);
+  border: 1px solid #414b5c;
+  border-radius: 8px;
+  font-size: 15px;
+}
+button {
+  cursor: pointer;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--rojo);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+button:hover { filter: brightness(1.12); }
+.boton { width: 100%; margin-top: 22px; min-height: 50px; }
+.secundario { background: var(--panel2); border: 1px solid var(--borde); }
+.resumen { margin-bottom: 18px; }
+.resultados {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+.coche {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: linear-gradient(145deg, #202735, #12161e);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+.coche h3 { margin: 7px 0 3px; font-size: 21px; }
+.categoria { color: var(--rojo); font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
+.precio { color: var(--rojo); font-size: 23px; font-weight: bold; margin-top: 12px; }
+.detalles { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
+.chip { background: #303949; padding: 7px 9px; border-radius: 6px; font-size: 12px; }
+.coche p { margin: 5px 0; }
+.puntuacion { color: #c8f5d0; font-size: 13px; font-weight: bold; }
+.vacio {
+  grid-column: 1 / -1;
+  padding: 22px;
+  border: 1px dashed var(--borde);
+  border-radius: 10px;
+}
+.nota { font-size: 12px; }
+footer {
+  padding: 25px 18px;
+  border-top: 1px solid var(--borde);
+  text-align: center;
+  color: var(--suave);
+  font-size: 12px;
+}
+@media (max-width: 650px) {
+  header { padding: 18px; }
+  main { padding: 20px 14px 40px; }
+  .formulario, .resultados { grid-template-columns: 1fr; }
+  .panel { padding: 18px; }
+  h1 { letter-spacing: -1px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">AUTO<span>MATCH</span></div>
+  <a href="#buscador">Buscar mi coche ↓</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="sobrelinea">TU COCHE, A TU MANERA</div>
+    <h1>Encuentra tu próximo<br><span>coche ideal.</span></h1>
+    <p>Desde coches urbanos hasta SUV, monovolúmenes y superdeportivos.
+    Dinos qué necesitas y descubre modelos que se ajustan a tus preferencias.</p>
+  </section>
+
+  <section class="panel" id="buscador">
+    <h2>Encuentra tu coche</h2>
+    <p>Completa tus preferencias. Puedes dejar cualquier opción en «Me da igual».</p>
+
+    <form id="formulario">
+      <div class="formulario">
+        <div class="campo">
+          <label for="presupuesto">Presupuesto máximo</label>
+          <select id="presupuesto">
+            <option value="10000">10.000 €</option>
+            <option value="20000">20.000 €</option>
+            <option value="30000" selected>30.000 €</option>
+            <option value="50000">50.000 €</option>
+            <option value="100000">100.000 €</option>
+            <option value="250000">250.000 €</option>
+            <option value="1000000">Sin límite definido</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="estado">Estado del coche</label>
+          <select id="estado">
+            <option value="todos">Nuevo o de segunda mano</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="usado">De segunda mano</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="tipo">Tipo de coche</label>
+          <select id="tipo">
+            <option value="todos">Todos los tipos</option>
+            <option value="urbano">Urbano</option>
+            <option value="utilitario">Utilitario</option>
+            <option value="compacto">Compacto</option>
+            <option value="berlina">Berlina</option>
+            <option value="familiar">Familiar</option>
+            <option value="suv">SUV</option>
+            <option value="todoterreno">Todoterreno</option>
+            <option value="monovolumen">Monovolumen</option>
+            <option value="coupé">Coupé</option>
+            <option value="deportivo">Deportivo</option>
+            <option value="superdeportivo">Superdeportivo</option>
+            <option value="cabrio">Cabrio o descapotable</option>
+            <option value="pickup">Pick-up</option>
+            <option value="furgoneta">Furgoneta</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="combustible">Combustible o motor</label>
+          <select id="combustible">
+            <option value="todos">Cualquiera</option>
+            <option value="gasolina">Gasolina</option>
+            <option value="diesel">Diésel</option>
+            <option value="hibrido">Híbrido</option>
+            <option value="enchufable">Híbrido enchufable</option>
+            <option value="electrico">Eléctrico</option>
+            <option value="gas">GLP o GNC</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="marca">Marca preferida</label>
+          <select id="marca">
+            <option value="todas">Cualquier marca</option>
+            <option>Audi</option>
+            <option>BMW</option>
+            <option>BYD</option>
+            <option>Citroën</option>
+            <option>Dacia</option>
+            <option>Ferrari</option>
+            <option>Fiat</option>
+            <option>Ford</option>
+            <option>Honda</option>
+            <option>Hyundai</option>
+            <option>Kia</option>
+            <option>Lamborghini</option>
+            <option>Land Rover</option>
+            <option>Lexus</option>
+            <option>Mercedes-Benz</option>
+            <option>MG</option>
+            <option>MINI</option>
+            <option>McLaren</option>
+            <option>Nissan</option>
+            <option>Opel</option>
+            <option>Peugeot</option>
+            <option>Porsche</option>
+            <option>Renault</option>
+            <option>SEAT</option>
+            <option>Škoda</option>
+            <option>Tesla</option>
+            <option>Toyota</option>
+            <option>Volkswagen</option>
+            <option>Volvo</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="potencia">Potencia mínima</label>
+          <select id="potencia">
+            <option value="0">Me da igual</option>
+            <option value="75">75 CV</option>
+            <option value="100">100 CV</option>
+            <option value="150">150 CV</option>
+            <option value="200">200 CV</option>
+            <option value="300">300 CV</option>
+            <option value="500">500 CV</option>
+            <option value="700">700 CV</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="plazas">Número de plazas</label>
+          <select id="plazas">
+            <option value="0">Me da igual</option>
+            <option value="2">2 plazas</option>
+            <option value="4">4 plazas o más</option>
+            <option value="5">5 plazas o más</option>
+            <option value="7">7 plazas o más</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="prioridad">¿Qué valoras más?</label>
+          <select id="prioridad">
+            <option value="equilibrio">Equilibrio general</option>
+            <option value="precio">Precio bajo</option>
+            <option value="potencia">Potencia</option>
+            <option value="espacio">Espacio y plazas</option>
+            <option value="consumo">Consumo reducido</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="boton" type="submit">Buscar coches recomendados →</button>
+    </form>
+  </section>
+
+  <section class="panel" id="zona-resultados">
+    <h2>Tus recomendaciones</h2>
+    <p class="resumen" id="resumen" aria-live="polite">Tus resultados aparecerán aquí.</p>
+    <div class="resultados" id="resultados"></div>
+  </section>
+
+  <p class="nota">Aviso: AutoMatch es un prototipo demostrativo. Los precios y datos son orientativos,
+  no constituyen ofertas de venta y deben comprobarse con el fabricante o vendedor.
+  El catálogo inicial es limitado y no incluye todos los coches del mercado.</p>
+</main>
+
+<footer>© AutoMatch · Encuentra el coche que encaja contigo.</footer>
+
+<script>
+const coches = [
+  {marca:"Dacia", modelo:"Sandero", tipo:"utilitario", precio:13000, cv:90, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.5, nota:"Una opción sencilla y económica para el día a día."},
+  {marca:"Toyota", modelo:"Aygo X", tipo:"urbano", precio:16000, cv:72, motor:"hibrido", plazas:4, estado:"nuevo", consumo:4.8, nota:"Pequeño y práctico para moverte por ciudad."},
+  {marca:"Hyundai", modelo:"i20", tipo:"utilitario", precio:19000, cv:100, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.5, nota:"Un utilitario equilibrado para uso diario."},
+  {marca:"Renault", modelo:"Clio", tipo:"utilitario", precio:19000, cv:90, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.2, nota:"Compacto, versátil y fácil de conducir."},
+  {marca:"Toyota", modelo:"Corolla", tipo:"compacto", precio:27000, cv:140, motor:"hibrido", plazas:5, estado:"nuevo", consumo:4.7, nota:"Interesante para quien prioriza eficiencia."},
+  {marca:"Volkswagen", modelo:"Golf", tipo:"compacto", precio:30000, cv:116, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.8, nota:"Un compacto polivalente para muchos usos."},
+  {marca:"Škoda", modelo:"Octavia", tipo:"berlina", precio:30000, cv:150, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.8, nota:"Amplio espacio y buen enfoque viajero."},
+  {marca:"Toyota", modelo:"Corolla Touring Sports", tipo:"familiar", precio:31000, cv:140, motor:"hibrido", plazas:5, estado:"nuevo", consumo:4.8, nota:"Maletero amplio y consumo contenido."},
+  {marca:"Dacia", modelo:"Jogger", tipo:"monovolumen", precio:19000, cv:110, motor:"gasolina", plazas:7, estado:"nuevo", consumo:6.0, nota:"Una alternativa económica con opción de siete plazas."},
+  {marca:"Citroën", modelo:"Berlingo", tipo:"furgoneta", precio:26000, cv:130, motor:"diesel", plazas:5, estado:"nuevo", consumo:5.5, nota:"Muy práctica para carga y familia."},
+  {marca:"Kia", modelo:"Sportage", tipo:"suv", precio:33000, cv:160, motor:"gasolina", plazas:5, estado:"nuevo", consumo:6.8, nota:"SUV familiar con una posición de conducción elevada."},
+  {marca:"Hyundai", modelo:"Tucson", tipo:"suv", precio:34000, cv:160, motor:"gasolina", plazas:5, estado:"nuevo", consumo:7.0, nota:"Espacio para pasajeros y equipaje."},
+  {marca:"Dacia", modelo:"Duster", tipo:"todoterreno", precio:25000, cv:130, motor:"gasolina", plazas:5, estado:"nuevo", consumo:6.5, nota:"SUV robusto para un uso variado."},
+  {marca:"Ford", modelo:"Ranger", tipo:"pickup", precio:40000, cv:170, motor:"diesel", plazas:5, estado:"nuevo", consumo:8.0, nota:"Pick-up pensada para trabajo y actividades al aire libre."},
+  {marca:"Tesla", modelo:"Model 3", tipo:"berlina", precio:40000, cv:283, motor:"electrico", plazas:5, estado:"nuevo", consumo:0, nota:"Berlina eléctrica; conviene valorar la carga disponible."},
+  {marca:"BYD", modelo:"Dolphin", tipo:"compacto", precio:30000, cv:204, motor:"electrico", plazas:5, estado:"nuevo", consumo:0, nota:"Compacto eléctrico para desplazamientos diarios."},
+  {marca:"BMW", modelo:"Serie 3", tipo:"berlina", precio:45000, cv:184, motor:"gasolina", plazas:5, estado:"nuevo", consumo:6.5, nota:"Berlina con enfoque dinámico."},
+  {marca:"Audi", modelo:"A5", tipo:"coupé", precio:50000, cv:204, motor:"gasolina", plazas:5, estado:"nuevo", consumo:6.5, nota:"Diseño elegante y enfoque rutero."},
+  {marca:"MINI", modelo:"Cooper", tipo:"urbano", precio:28000, cv:156, motor:"gasolina", plazas:4, estado:"nuevo", consumo:6.0, nota:"Coche compacto con carácter deportivo."},
+  {marca:"Volkswagen", modelo:"Multivan", tipo:"monovolumen", precio:55000, cv:150, motor:"diesel", plazas:7, estado:"nuevo", consumo:6.8, nota:"Mucho espacio y configuración para pasajeros."},
+  {marca:"Land Rover", modelo:"Defender", tipo:"todoterreno", precio:75000, cv:250, motor:"diesel", plazas:5, estado:"nuevo", consumo:8.5, nota:"Todoterreno de orientación aventurera."},
+  {marca:"Porsche", modelo:"718 Cayman", tipo:"deportivo", precio:75000, cv:300, motor:"gasolina", plazas:2, estado:"usado", consumo:9.0, nota:"Deportivo de dos plazas con motor de gasolina."},
+  {marca:"Ford", modelo:"Mustang", tipo:"coupé", precio:65000, cv:446, motor:"gasolina", plazas:4, estado:"nuevo", consumo:12.0, nota:"Coupé potente de estilo americano."},
+  {marca:"BMW", modelo:"M2", tipo:"deportivo", precio:85000, cv:480, motor:"gasolina", plazas:4, estado:"nuevo", consumo:10.0, nota:"Deportivo compacto de altas prestaciones."},
+  {marca:"Porsche", modelo:"911 Carrera", tipo:"deportivo", precio:150000, cv:388, motor:"gasolina", plazas:4, estado:"nuevo", consumo:9.5, nota:"Deportivo reconocido por su equilibrio."},
+  {marca:"Ferrari", modelo:"296 GTB", tipo:"superdeportivo", precio:300000, cv:830, motor:"enchufable", plazas:2, estado:"nuevo", consumo:6.5, nota:"Superdeportivo híbrido enchufable de altas prestaciones."},
+  {marca:"Lamborghini", modelo:"Revuelto", tipo:"superdeportivo", precio:500000, cv:1015, motor:"enchufable", plazas:2, estado:"nuevo", consumo:6.5, nota:"Superdeportivo híbrido de potencia muy elevada."},
+  {marca:"McLaren", modelo:"750S", tipo:"superdeportivo", precio:300000, cv:750, motor:"gasolina", plazas:2, estado:"nuevo", consumo:12.0, nota:"Superdeportivo centrado en prestaciones."},
+  {marca:"Mercedes-Benz", modelo:"AMG GT", tipo:"deportivo", precio:150000, cv:585, motor:"gasolina", plazas:2, estado:"nuevo", consumo:12.0, nota:"Deportivo potente para disfrutar de la conducción."},
+  {marca:"Lexus", modelo:"NX", tipo:"suv", precio:55000, cv:244, motor:"hibrido", plazas:5, estado:"nuevo", consumo:5.8, nota:"SUV híbrido con orientación confortable."},
+  {marca:"Volvo", modelo:"XC90", tipo:"suv", precio:80000, cv:250, motor:"hibrido", plazas:7, estado:"nuevo", consumo:7.5, nota:"SUV grande con opción de siete plazas."},
+  {marca:"Mazda", modelo:"MX-5", tipo:"cabrio", precio:32000, cv:132, motor:"gasolina", plazas:2, estado:"nuevo", consumo:6.5, nota:"Descapotable ligero para disfrutar conduciendo."},
+  {marca:"Porsche", modelo:"Taycan", tipo:"berlina", precio:110000, cv:408, motor:"electrico", plazas:4, estado:"usado", consumo:0, nota:"Berlina eléctrica de enfoque deportivo."},
+  {marca:"Audi", modelo:"Q5", tipo:"suv", precio:60000, cv:204, motor:"diesel", plazas:5, estado:"nuevo", consumo:6.5, nota:"SUV de tamaño medio para viajes y familia."},
+  {marca:"SEAT", modelo:"León", tipo:"compacto", precio:26000, cv:150, motor:"gasolina", plazas:5, estado:"nuevo", consumo:5.7, nota:"Compacto versátil para uso diario."}
+];
+
+const nombresMotores = {
+  gasolina:"Gasolina", diesel:"Diésel", hibrido:"Híbrido",
+  enchufable:"Híbrido enchufable", electrico:"Eléctrico", gas:"GLP o GNC"
+};
+const nombresTipos = {
+  urbano:"Urbano", utilitario:"Utilitario", compacto:"Compacto",
+  berlina:"Berlina", familiar:"Familiar", suv:"SUV",
+  todoterreno:"Todoterreno", monovolumen:"Monovolumen",
+  "coupé":"Coupé", deportivo:"Deportivo",
+  superdeportivo:"Superdeportivo", cabrio:"Cabrio",
+  pickup:"Pick-up", furgoneta:"Furgoneta"
+};
+const euros = new Intl.NumberFormat("es-ES", {
+  style:"currency", currency:"EUR", maximumFractionDigits:0
+});
+
+document.getElementById("formulario").addEventListener("submit", function(evento) {
+  evento.preventDefault();
+
+  const presupuesto = Number(document.getElementById("presupuesto").value);
+  const estado = document.getElementById("estado").value;
+  const tipo = document.getElementById("tipo").value;
+  const motor = document.getElementById("combustible").value;
+  const marca = document.getElementById("marca").value;
+  const potencia = Number(document.getElementById("potencia").value);
+  const plazas = Number(document.getElementById("plazas").value);
+  const prioridad = document.getElementById("prioridad").value;
+
+  let candidatos = coches.filter(coche =>
+    coche.precio <= presupuesto &&
+    (estado === "todos" || coche.estado === estado) &&
+    (tipo === "todos" || coche.tipo === tipo) &&
+    (motor === "todos" || coche.motor === motor) &&
+    (marca === "todas" || coche.marca === marca) &&
+    coche.cv >= potencia &&
+    (plazas === 0 || coche.plazas >= plazas)
+  );
+
+  candidatos.sort((a, b) => {
+    if (prioridad === "precio") return a.precio - b.precio;
+    if (prioridad === "potencia") return b.cv - a.cv;
+    if (prioridad === "espacio") return b.plazas - a.plazas || a.precio - b.precio;
+    if (prioridad === "consumo") return a.consumo - b.consumo;
+    return (a.precio / presupuesto) - (b.precio / presupuesto);
+  });
+
+  const resultados = document.getElementById("resultados");
+  const resumen = document.getElementById("resumen");
+  resultados.replaceChildren();
+
+  if (candidatos.length === 0) {
+    resumen.textContent = "No hemos encontrado coincidencias exactas con todas tus preferencias.";
+    const mensaje = document.createElement("div");
+    mensaje.className = "vacio";
+    mensaje.textContent = "Prueba a aumentar el presupuesto o a seleccionar «Todos los tipos» y «Cualquiera» en el combustible y la marca.";
+    resultados.appendChild(mensaje);
+  } else {
+    resumen.textContent = "Hemos encontrado " + candidatos.length +
+      " modelos del catálogo que cumplen tus filtros. Aquí tienes los primeros resultados:";
+    candidatos.slice(0, 12).forEach((coche, indice) => {
+      const tarjeta = document.createElement("article");
+      tarjeta.className = "coche";
+
+      const categoria = document.createElement("div");
+      categoria.className = "categoria";
+      categoria.textContent = nombresTipos[coche.tipo] || coche.tipo;
+
+      const titulo = document.createElement("h3");
+      titulo.textContent = coche.marca + " " + coche.modelo;
+
+      const precio = document.createElement("div");
+      precio.className = "precio";
+      precio.textContent = euros.format(coche.precio);
+
+      const detalles = document.createElement("div");
+      detalles.className = "detalles";
+
+      [
+        coche.cv + " CV",
+        nombresMotores[coche.motor],
+        coche.plazas + " plazas",
+        coche.estado === "nuevo" ? "Nuevo" : "Segunda mano"
+      ].forEach(texto => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = texto;
+        detalles.appendChild(chip);
+      });
+
+      const motivo = document.createElement("p");
+      motivo.textContent = coche.nota;
+
+      const orden = document.createElement("div");
+      orden.className = "puntuacion";
+      orden.textContent = indice === 0 ? "Una de tus mejores coincidencias" : "Coincide con tus filtros";
+
+      tarjeta.append(categoria, titulo, precio, detalles, motivo, orden);
+      resultados.appendChild(tarjeta);
+    });
+  }
+
+  document.getElementById("zona-resultados").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
